@@ -59,7 +59,7 @@ router.get('/', async(req, res)=>{
 });
 
 //update a particular field in the inventory
-router.patch('create/:id', async(req, res)=>{
+router.patch('/:id', async(req, res)=>{
 try {
     let data = await RawMaterials.findByIdAndUpdate( req.params.id, {
         name:  req.body.name,
