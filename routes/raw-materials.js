@@ -78,14 +78,14 @@ try {
 });
 
 //Delete a particular item from the inventory
-router.delete('delete/:id', async(req, res)=>{
-    let data = await RawMaterials.findByIdAndUpdate(req.params.id, {
+router.delete('/:id', async(req, res)=>{
+    const data = await RawMaterials.findByIdAndUpdate(req.params.id, {
         comments: req.body.comments,
         isDeleted: true
     });
    
     try {
-        if(!data){
+        if(data.isDeleted == true){
             return res.status(400).json({
                 message:"data does not exist"
             })
@@ -101,9 +101,9 @@ router.delete('delete/:id', async(req, res)=>{
 });
 
 //Restore a deletd item back into the inventory
-router.patch('restore/:id', async(req, res)=>{
+router.put('/:id/restore', async(req, res)=>{
     try {
-        let data = await RawMaterials.findByIdAndUpdate( req.params.id, {
+        const data = await RawMaterials.findByIdAndUpdate( req.params.id, {
             comments: req.body.comments,
             isDeleted: false
         });
