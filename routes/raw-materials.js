@@ -39,9 +39,9 @@ router.post('/', async(req, res)=>{
 
 //Get a particular item from the inventory
 router.get('/:id', async(req, res)=>{
-    try {
-        let data = await RawMaterials.findById(req.params.id, {isDeleted: false});
-        res.status(200).send(data)
+       let data = await RawMaterials.findById(req.params.id, {isDeleted: false});
+  try {
+        res.status(200).json({data: data})
     } catch (ex) {
         res.status(400).send(ex.message);
         console.log(ex.message);
@@ -49,7 +49,7 @@ router.get('/:id', async(req, res)=>{
 });
 
 //Get all items from the inventory
-router.get('/inventory', async(req, res)=>{
+router.get('/', async(req, res)=>{
     try {
         let data = await RawMaterials.find({ isDeleted: false });
         res.status(200).send(data)
