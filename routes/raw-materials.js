@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const _ = require('lodash');
 const RawMaterials = require('../models/Raw');
 
 
@@ -52,7 +51,7 @@ router.get('/:id', async(req, res)=>{
 router.get('/', async(req, res)=>{
     try {
         let data = await RawMaterials.find({ isDeleted: false });
-        res.status(200).send(data)
+        res.status(200).json({data: data})
     } catch (ex) {
         res.status(400).send(ex.message);
         console.log(ex.message);
@@ -70,7 +69,7 @@ try {
     if(!data){
         return res.send('data does not exist')
     }
-    res.status(200).send(data)
+    res.status(200).json({data: data})
 } catch (ex) {
     res.status(400).send(ex.message);
     console.log(ex.message);
@@ -87,12 +86,12 @@ router.delete('delete/:id', async(req, res)=>{
    
     try {
         if(!data){
-            return res.json({
+            return res.status(400).json({
                 message:"data does not exist"
             })
         };
         console.log(data);
-        res.json({
+        res.status(200).json({
             data: 'entry has been deleted'
         });
     } catch (ex) {
@@ -109,7 +108,7 @@ router.patch('restore/:id', async(req, res)=>{
             isDeleted: false
         });
         if(!data){
-            return res.send('data does not exist')
+            return res.status(400).send('data does not exist')
         }
         res.status(200).json({
             message: 'data is restored',
